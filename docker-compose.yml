@@ -6,6 +6,12 @@ services:
     build:
       context: .
       dockerfile: postgres/Dockerfile
+    volumes:
+      - ./volumes/backrestrepo:/backrestrepo
+      - ./volumes/backup:/backup
+      - ./volumes/pgconf:/pgconf
+      - ./volumes/pgdata:/pgdata
+      - ./volumes/pgwal:/pgwal
     environment:
       - PG_MODE=primary
       - PG_PRIMARY_USER=postgres

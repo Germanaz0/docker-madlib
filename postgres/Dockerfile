@@ -2,6 +2,8 @@ FROM crunchydata/crunchy-postgres:centos7-10.5-2.1.0
 
 USER root
 
+VOLUME ["/backrestrepo", "/backup", "/pgconf", "/pgdata", "/pgwal"]
+
 RUN yum -y update; yum clean all
 RUN yum -y install postgresql10-plpython supervisor; yum clean all
 
@@ -30,6 +32,8 @@ RUN mkdir -p /src/madlib
 COPY ./data/apache-madlib-1.15.1-bin-Linux.rpm /src/madlib
 
 RUN yum install -y /src/madlib/apache-madlib-1.15.1-bin-Linux.rpm --nogpgcheck
+
+RUN chown -R postgres:postgres /backrestrepo /backup /pgconf /pgdata /pgwal
 
 USER 26
 EXPOSE 5432
